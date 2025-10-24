@@ -12,8 +12,11 @@ jobs:
     #
     # rust:1.37-alpine was failing some GitHub's extra checks:
     # https://github.com/peter-lyons-kehl/prudent/actions/runs/18773758118/job/53563574851
-    # Other Rust Alpine images that failed: rust:1.54.0-alpine
-    container: rust:1.76.0-alpine
+    #
+    # Other Rust Alpine images that I've tried and they failed: rust:1.54.0-alpine.
+    #
+    # Also, our tests use usize::unchecked_add, which was stabilized in Rust 1.79.
+    container: rust:1.79-alpine
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
