@@ -9,7 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     # Cargo.toml has "rust-version" (MSRV) 1.31. But, 1.37 is the oldest Alpine docker image. See
     # https://hub.docker.com/_/rust/tags?name=alpine&ordering=-last_updated.
-    container: rust:1.37-alpine
+    #
+    # rust:1.37-alpine was failing some GitHub's extra checks:
+    # https://github.com/peter-lyons-kehl/prudent/actions/runs/18773758118/job/53563574851
+    # Other Rust Alpine images that failed: rust:1.54.0-alpine
+    container: rust:1.76.0-alpine
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
