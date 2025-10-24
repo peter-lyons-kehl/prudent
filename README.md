@@ -7,41 +7,56 @@ results](https://github.com/peter-lyons-kehl/prudent/actions/workflows/main.yml/
 
 ## Purpose
 
-Prudent helps you minimize the amount of code that is marked as `unsafe`. It is ergonomic (short),
-simple and obvious (easy to search for and review).
+`prudent`` helps you minimize the amount of code that is marked as `unsafe`.
+
+- ergonomic (short)
+- simple
+- and obvious (easy to search for and review).
 
 That helps both authors, reviewers and all of us:
 
-- authors/maintainers:
-  - Notice/prevent accidental/unnecessary unsafe code
-    - in parameters to function calls, or
-    - TODO: in parameters or receiver `self` of a method call, or
-    - TODO: in values stored to `static mut` variables, or
-    - TODO: in values stored to fields of `union` types, or
-    - TODO: in expressions whose cast or defer need `unsafe`
-- reviewers: Save your time by making the unsafe parts shorter.
-- all of us:
+- Authors/maintainers:
+  - Notice/prevent accidental (unintended), or unnecessary, `unsafe` code:
+    - function/method calls:
+      - in parameters to calls to an `unsafe` function or method
+      - in an expression that evaluates to an (`unsafe`) function (that is to be evaluated)
+      - in an expression that evaluates to the receiver (`self`) of an `unsafe` method
+    - variable access:
+      - TODO: `static mut` variables
+      - TODO: fields of `union` types
+    - value cast (to a different type):
+      - TODO: in expressions whose cast or defer is `unsafe`
+- Reviewers: Save your time by making the unsafe parts shorter. Focus on what matters.
+- All of us:
   - Prevent accidental invocation of functions (3rd party, or even your own) that
     1. have been called as a part of (larger) `unsafe {...}` block, and
     2. they used to be safe, but
     3. later they were changed to `unsafe`. (Of course, such a change is a breaking change, but
-    `unsafe {...}` doesn't discriminate...)
+       mistakes happen.)
   - Make our libraries and applications safer.
 <!-- ## Use -->
 <!-- # Details -->
 <!-- ## Problem -->
 
+# Scope
+
+Rust is a rich language and it allows complex statements/expressions. `prudent` tries to be flexible, but it also needs to be manageable and testable. So, there may be code that `prudent` doesn't accept. Most likely if it involves advanced pattern matching.
+
+`prudent` is to help you make `unsafe` code stand out more. Mixing `unsafe` with advanced or complex
+syntax may sound exciting, but it makes reading the code difficult. Can that be an opportunity to
+refactor?
+
 # Zero cost
 
-Prudent is a zero-cost abstraction (for both binary size/speed and memory). Rust/LLVM easily
+`prudent` is a zero-cost abstraction (for both binary size/speed and memory). Rust/LLVM easily
 optimizes it out.
 
-Current features of Prudent don't use procedural macros, but use `macro_rules!` (macros by example),
-which compiles fast.
+Current features of `prudent` don't use procedural macros, but use `macro_rules!` (macros by
+example), so it compiles fast.
 
 # Compatibility
 
-Prudent is `no-std`-compatible. It has no dependencies.
+`prudent` is `no-std`-compatible. It has no dependencies.
 
 ## Always forward compatible
 
