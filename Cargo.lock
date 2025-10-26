@@ -2,5 +2,5 @@
 # It is not intended for manual editing.
 [[package]]
 name = "prudent"
-version = "0.0.1-alpha"
+version = "0.0.2-alpha"
 
