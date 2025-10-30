@@ -25,11 +25,12 @@ const B: bool = unsafe_fn!(unsafe_fn_one_arg, true);
 const U8: u8 = unsafe_fn!(unsafe_fn_two_args, true, 0);
 ```
 
-# unsafe_method
-The receiver type `S` is intentionally **not** [core::marker::Copy].
+# unsafe_method_ref
 ```rust
 # use prudent::unsafe_method_ref;
-struct S {}
+let _ = unsafe_method_ref!(1u8, unchecked_add, 0);
+
+struct S {} // intentionally NOT Copy
 impl S {
     fn unsafe_method_no_args(&self) {}
     fn unsafe_method_one_arg(&self, _: bool) {}
@@ -40,8 +41,22 @@ let s = S {};
 unsafe_method_ref!(s, unsafe_method_no_args);
 unsafe_method_ref!(s, unsafe_method_one_arg, true);
 unsafe_method_ref!(s, unsafe_method_two_args, true, false);
+```
 
-let _ = unsafe_method_ref!(1u8, unchecked_add, 0);
+# unsafe_method_mut
+```rust
+# use prudent::unsafe_method_mut;
+struct S {}
+impl S {
+    fn unsafe_method_no_args(&mut self) {}
+    fn unsafe_method_one_arg(&mut self, _: bool) {}
+    fn unsafe_method_two_args(&mut self, _: bool, _: bool) {}
+}
+
+let mut s = S {};
+unsafe_method_mut!(s, unsafe_method_no_args);
+unsafe_method_mut!(s, unsafe_method_one_arg, true);
+unsafe_method_mut!(s, unsafe_method_two_args, true, false);
 ```
 
 ```rust
