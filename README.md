@@ -59,6 +59,38 @@ unsafe_method_mut!(s, unsafe_method_one_arg, true);
 unsafe_method_mut!(s, unsafe_method_two_args, true, false);
 ```
 
+# unsafe_method_val
+```rust
+# use prudent::unsafe_method_val;
+{
+    struct SNonCopy {}
+    impl SNonCopy {
+        fn unsafe_method_no_args(self) {}
+        fn unsafe_method_one_arg(self, _: bool) {}
+        fn unsafe_method_two_args(self, _: bool, _: bool) {}
+    }
+
+    let sNonCopy = SNonCopy {};
+    unsafe_method_val!(sNonCopy, unsafe_method_no_args);
+    let sNonCopy = SNonCopy {};
+    unsafe_method_val!(sNonCopy, unsafe_method_one_arg, true);
+    let sNonCopy = SNonCopy {};
+    unsafe_method_val!(sNonCopy, unsafe_method_two_args, true, false);
+}
+{
+    #[derive(Clone, Copy)]
+    struct SCopy {}
+    impl SCopy {
+        fn unsafe_method_no_args(self) {}
+    }
+
+    let sCopy = SCopy {};
+    unsafe_method_val!(sCopy, unsafe_method_no_args);
+    unsafe_method_val!(sCopy, unsafe_method_no_args);
+    let _ = sCopy;
+}
+```
+
 ```rust
 struct S {}
 impl S {
